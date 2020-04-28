@@ -10,9 +10,7 @@ class App extends Component {
         <nav className="navbar navbar-expand-sm bg-light">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                React Redux
-              </a>
+              <span className="nav-link">Post & Comments</span>
             </li>
           </ul>
         </nav>
@@ -20,12 +18,11 @@ class App extends Component {
         <div className="container">
           <Router>
             <Switch>
-              {/* can use hooks */}
-              <Route exact path="/">
+              {/* use `component` to use the params from `match` */}
+              <Route exact path="/comments/:id" component={Comments} />
+              <Route path="/">
                 <Post />
               </Route>
-              {/* cannot use hooks */}
-              <Route exact path="/comments/:id" component={Comments} />
             </Switch>
           </Router>
         </div>

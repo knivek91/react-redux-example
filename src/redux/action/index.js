@@ -50,8 +50,6 @@ export const getPost = () => {
 
 export const getCommentsByPost = id => {
   return async (dispatch, getState) => {
-    console.log(id, "is");
-
     if (isNaN(id) || id <= 0) {
       dispatch(
         setErrorComment("Post Id cannot be less than 0 or alphanumeric.")
@@ -64,6 +62,8 @@ export const getCommentsByPost = id => {
         );
         const state = getState();
         const post = state.post.data.find(p => p.id === id);
+        // could have a validation when the user refresh the browser (post `data` will be `[]`), so we can get the post by the Id and fix that
+        // but the api doesn't support that
         const byPost = data.filter(d => d.postId === id);
         dispatch(setDataComment({ post: post, data: byPost }));
       } catch (e) {

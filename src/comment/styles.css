@@ -39,3 +39,7 @@
   top: 10px;
   left: -6px;
 }
+
+.display-inline {
+  display: inline;
+}

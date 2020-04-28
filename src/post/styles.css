@@ -1,0 +1,9 @@
+.card-min-height {
+  margin-bottom: 8px;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
