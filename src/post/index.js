@@ -6,7 +6,7 @@ import { getPost } from "../redux/action";
 
 import "./styles.css";
 
-const Post = ({ loading, error, data, getPost }) => {
+export const Post = ({ loading, error, data, getPost }) => {
   useEffect(() => {
     getPost();
   }, []);
@@ -17,15 +17,17 @@ const Post = ({ loading, error, data, getPost }) => {
         <p className="text-danger">{`There is an error: ${error}`}</p>
       ) : null}
       {loading ? (
-        <p>Loading . . . </p>
+        <p>Loading . . .</p>
       ) : (
         <div className="row">
           {data.map(({ id, title }) => (
-            <div className="col-3">
-              <div class="card card-min-height">
-                <div class="card-header ellipsis">{title}</div>
-                <div class="card-body">
-                  <Link to={`/comments/${id}`}>see comments</Link>
+            <div className="col-3" key={id} data-testid={`card-${id}`}>
+              <div className="card card-min-height">
+                <div className="card-header ellipsis">{title}</div>
+                <div className="card-body">
+                  <Link to={`/comments/${id}`} data-testid={`link-${id}`}>
+                    see comments
+                  </Link>
                 </div>
               </div>
             </div>

@@ -29,7 +29,16 @@ const reducer = (state = defaultState, action) => {
     case ActionTypes.ADD_COMMENT_POST:
       return {
         ...state,
-        data: [...state.data, payload]
+        data: {
+          post: payload.post,
+          data: [
+            ...state.data.data,
+            {
+              id: state.data.data.length + 1,
+              ...payload.data
+            }
+          ]
+        }
       };
     default:
       return state;

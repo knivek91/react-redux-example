@@ -33,6 +33,11 @@ const setDataComment = d => ({
   payload: d
 });
 
+export const addCommentToPost = c => ({
+  type: ActionTypes.ADD_COMMENT_POST,
+  payload: c
+});
+
 // async actions
 export const getPost = () => {
   return async dispatch => {
@@ -57,15 +62,23 @@ export const getCommentsByPost = id => {
     } else {
       try {
         dispatch(setLoadingComment(true));
-        const { data } = await axios(
-          "https://jsonplaceholder.typicode.com/comments"
-        );
+        let data = [];
         const state = getState();
+
+        // weird data.data, but for the example works
+        if (state.comments.data.data.length > 0) {
+          data = state.comments.data.data;
+        } else {
+          const response = await axios(
+            "https://jsonplaceholder.typicode.com/comments"
+          );
+          data = response.data;
+        }
+
         const post = state.post.data.find(p => p.id === id);
         // could have a validation when the user refresh the browser (post `data` will be `[]`), so we can get the post by the Id and fix that
         // but the api doesn't support that
-        const byPost = data.filter(d => d.postId === id);
-        dispatch(setDataComment({ post: post, data: byPost }));
+        dispatch(setDataComment({ post: post, data: data }));
       } catch (e) {
         dispatch(setErrorComment(e.message));
       }
