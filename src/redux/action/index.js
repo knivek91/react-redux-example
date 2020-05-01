@@ -53,6 +53,10 @@ export const getPost = () => {
   };
 };
 
+/**
+ * Get all the `comments` for the selected `post`
+ * @param {number} id id of the `post`
+ */
 export const getCommentsByPost = id => {
   return async (dispatch, getState) => {
     if (isNaN(id) || id <= 0) {

@@ -9,18 +9,29 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 import { Input, TextArea } from "./component";
 
+// initiall values for formik's form
 const initialValues = {
   name: "",
   email: "",
   body: ""
 };
 
+// validation schema for the add comment form
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Must be a valid email").required("Required"),
   name: Yup.string().min(5, "At least 5 characters").required("Required"),
   body: Yup.string().min(15, "At least 15 characters").required("Required")
 });
 
+/**
+ * Component for rendering all the information about the `Comments` of a selected `Post`
+ * @param {boolean} loading indicate if the component needs to render loading indicator
+ * @param {string} error provides the error message
+ * @param {object} comments provides all the information about the `comments`
+ * @param {object} post provides the information about the selected `post`
+ * @param {Function} getCommentsByPost execute to get the information about the `comments` of the selected `post`
+ * @param {Function} addCommentToPost execute when you want to add a `comment` to a `post`
+ */
 export const Comment = ({
   loading,
   error,
@@ -30,10 +41,12 @@ export const Comment = ({
   getCommentsByPost,
   addCommentToPost
 }) => {
+  // get post after first render
   useEffect(() => {
     getCommentsByPost(+match.params.id);
   }, []);
 
+  // add comment to the post
   const onSumbit = (values, { resetForm }) => {
     addCommentToPost({ post: post, data: { postId: post.id, ...values } });
     resetForm();

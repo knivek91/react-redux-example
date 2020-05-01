@@ -6,7 +6,15 @@ import { getPost } from "../redux/action";
 
 import "./styles.css";
 
+/**
+ * Component for rendering all the information about the `Posts`
+ * @param {boolean} loading provides if component needs to render loading indicator
+ * @param {string} error provides the error message
+ * @param {object} data provides all the information about the `posts`
+ * @param {Function} getPost execute to get the information about the `posts`
+ */
 export const Post = ({ loading, error, data, getPost }) => {
+  // get post after first render
   useEffect(() => {
     getPost();
   }, []);
